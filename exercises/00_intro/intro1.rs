@@ -6,6 +6,7 @@
 // Try adding a new `println!` and check the updated output in the terminal.
 
 fn main() {
+    println!();
     println!("Hello and");
     println!(r#"       welcome to...                      "#);
     println!(r#"                 _   _ _                  "#);
