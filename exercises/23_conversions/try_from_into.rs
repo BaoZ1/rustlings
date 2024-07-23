@@ -28,14 +28,42 @@ enum IntoColorError {
 impl TryFrom<(i16, i16, i16)> for Color {
     type Error = IntoColorError;
 
-    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {}
+    fn try_from(tuple: (i16, i16, i16)) -> Result<Self, Self::Error> {
+        let red: Result<u8, _> = tuple.0.try_into();
+        if let Err(_) = red {
+            return Err(IntoColorError::IntConversion);
+        }
+        let green: Result<u8, _> = tuple.1.try_into();
+        if let Err(_) = green {
+            return Err(IntoColorError::IntConversion);
+        }
+        let blue: Result<u8, _> = tuple.2.try_into();
+        if let Err(_) = blue {
+            return Err(IntoColorError::IntConversion);
+        }
+        Ok(Color { red: red.unwrap(), green: green.unwrap(), blue: blue.unwrap() })
+    }
 }
 
 // TODO: Array implementation.
 impl TryFrom<[i16; 3]> for Color {
     type Error = IntoColorError;
 
-    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {}
+    fn try_from(arr: [i16; 3]) -> Result<Self, Self::Error> {
+        let red: Result<u8, _> = arr[0].try_into();
+        if let Err(_) = red {
+            return Err(IntoColorError::IntConversion);
+        }
+        let green: Result<u8, _> = arr[1].try_into();
+        if let Err(_) = green {
+            return Err(IntoColorError::IntConversion);
+        }
+        let blue: Result<u8, _> = arr[2].try_into();
+        if let Err(_) = blue {
+            return Err(IntoColorError::IntConversion);
+        }
+        Ok(Color { red: red.unwrap(), green: green.unwrap(), blue: blue.unwrap() })
+    }
 }
 
 // TODO: Slice implementation.
@@ -43,7 +71,24 @@ impl TryFrom<[i16; 3]> for Color {
 impl TryFrom<&[i16]> for Color {
     type Error = IntoColorError;
 
-    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {}
+    fn try_from(slice: &[i16]) -> Result<Self, Self::Error> {
+        if slice.len() != 3 {
+            return Err(IntoColorError::BadLen);
+        }
+         let red: Result<u8, _> = slice[0].try_into();
+        if let Err(_) = red {
+            return Err(IntoColorError::IntConversion);
+        }
+        let green: Result<u8, _> = slice[1].try_into();
+        if let Err(_) = green {
+            return Err(IntoColorError::IntConversion);
+        }
+        let blue: Result<u8, _> = slice[2].try_into();
+        if let Err(_) = blue {
+            return Err(IntoColorError::IntConversion);
+        }
+        Ok(Color { red: red.unwrap(), green: green.unwrap(), blue: blue.unwrap() })
+    }
 }
 
 fn main() {
